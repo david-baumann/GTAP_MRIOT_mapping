@@ -12,7 +12,7 @@ def get_Z_domestic():
     ### get info for domestic Z
     # lowercase_uppercase: code in gtap v7_code in gtap v10
     # purchase: from COMM_SOU in REG to COMM_TAR in REG
-    vdfm_VDFB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDFB.txt', ['COMM_SOU', 'COMM_TAR', 'REG'])
+    vdfm_VDFB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDFB.csv', ['COMM_SOU', 'COMM_TAR', 'REG'])
     # construct domestic Z
     Z_domestic = utils.raw_dict_to_matrix(vdfm_VDFB_dict, 'Z', {'REG_SOU_index_in_key': 2,
                                                                 'COMM_SOU_index_in_key': 0,
@@ -24,26 +24,26 @@ def get_Z_domestic():
 def get_F_domestic():
     ## get info for domestic y
     # final domestic household: from COMM in REG to Final in REG
-    vdpm_VDPB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDPB.txt', ['COMM', 'REG'])
+    vdpm_VDPB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDPB.csv', ['COMM', 'REG'])
     domestic_firm_to_region_final_house = utils.raw_dict_to_matrix(vdpm_VDPB_dict, 'firm_to_region_final',
                                                                    {'COMM_SOU_index_in_key': 0,
                                                                     'REG_SOU_index_in_key': 1,
                                                                     'REG_TAR_index_in_key': 1}, hyper)
     # final domestic gov: from COMM in REG to Final in REG
-    vdgm_VDGB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDGB.txt', ['COMM', 'REG'])
+    vdgm_VDGB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDGB.csv', ['COMM', 'REG'])
     domestic_firm_to_region_final_gov = utils.raw_dict_to_matrix(vdgm_VDGB_dict, 'firm_to_region_final',
                                                                  {'COMM_SOU_index_in_key': 0,
                                                                   'REG_SOU_index_in_key': 1,
                                                                   'REG_TAR_index_in_key': 1}, hyper)
 
     # final domestic inv: from COMM in REG to Final in REG
-    vdkm_VDIB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDIB.txt', ['COMM', 'REG'])
+    vdkm_VDIB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VDIB.csv', ['COMM', 'REG'])
     domestic_firm_to_region_final_inv = utils.raw_dict_to_matrix(vdkm_VDIB_dict, 'firm_to_region_final',
                                                                  {'COMM_SOU_index_in_key': 0,
                                                                   'REG_SOU_index_in_key': 1,
                                                                   'REG_TAR_index_in_key': 1}, hyper)
     # final domestic vst: from COMM in REG to Final in REG
-    vst_VST_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VST.txt', ['COMM', 'REG'])
+    vst_VST_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VST.csv', ['COMM', 'REG'])
     domestic_firm_to_region_final_vst = utils.raw_dict_to_matrix(vst_VST_dict, 'firm_to_region_final',
                                                                  {'COMM_SOU_index_in_key': 0,
                                                                   'REG_SOU_index_in_key': 1,
@@ -58,36 +58,36 @@ def get_F_domestic():
 def get_international_Z_F():
     ### get info for international Z
     # exports: from COMM in REG_SOU to REG_TAR
-    vxmd_VXSB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VXSB.txt', ['COMM', 'REG_SOU', 'REG_TAR'])
+    vxmd_VXSB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VXSB.csv', ['COMM', 'REG_SOU', 'REG_TAR'])
     exports_firm_to_region = utils.raw_dict_to_matrix(vxmd_VXSB_dict, 'F', {'REG_SOU_index_in_key': 1,
                                                                             'COMM_SOU_index_in_key': 0,
                                                                             'REG_TAR_index_in_key': 2}, hyper)
     # imports: COMM_SOU to COMM_TAR in REG
-    vifm_VMFB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMFB.txt', ['COMM_SOU', 'COMM_TAR', 'REG'])
+    vifm_VMFB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMFB.csv', ['COMM_SOU', 'COMM_TAR', 'REG'])
     imports_comm_to_firm = utils.raw_dict_to_matrix(vifm_VMFB_dict, 'comm_to_firm', {'COMM_SOU_index_in_key': 0,
                                                                                      'COMM_TAR_index_in_key': 1,
                                                                                      'REG_TAR_index_in_key': 2}, hyper)
     # imports: from COMM in REG_SOU to REG_TAR
-    vims_VMSB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMSB.txt', ['COMM', 'REG_SOU', 'REG_TAR'])
+    vims_VMSB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMSB.csv', ['COMM', 'REG_SOU', 'REG_TAR'])
     imports_firms_to_region = utils.raw_dict_to_matrix(vims_VMSB_dict, 'F',
                                                        {'COMM_SOU_index_in_key': 0,
                                                         'REG_SOU_index_in_key': 1,
                                                         'REG_TAR_index_in_key': 2}, hyper)
 
     # final imports household: COMM to Final in REG
-    vipm_VMPB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMPB.txt', ['COMM', 'REG'])
+    vipm_VMPB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMPB.csv', ['COMM', 'REG'])
     imports_comm_to_region_final_house = utils.raw_dict_to_matrix(vipm_VMPB_dict, 'comm_to_region_final',
                                                                   {'COMM_SOU_index_in_key': 0,
                                                                    'REG_TAR_index_in_key': 1}, hyper)
     ## get infor for international y
     # final imports gov: COMM to Final in REG
-    vigm_VMGB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMGB.txt', ['COMM', 'REG'])
+    vigm_VMGB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMGB.csv', ['COMM', 'REG'])
     imports_comm_to_region_final_gov = utils.raw_dict_to_matrix(vigm_VMGB_dict, 'comm_to_region_final',
                                                                 {'COMM_SOU_index_in_key': 0,
                                                                  'REG_TAR_index_in_key': 1}, hyper)
 
     # final imports inv: COMM to Final in REG
-    vikm_VMIB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMIB.txt', ['COMM', 'REG'])
+    vikm_VMIB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/VMIB.csv', ['COMM', 'REG'])
     imports_comm_to_region_final_inv = utils.raw_dict_to_matrix(vikm_VMIB_dict, 'comm_to_region_final',
                                                                 {'COMM_SOU_index_in_key': 0,
                                                                  'REG_TAR_index_in_key': 1}, hyper)
@@ -104,7 +104,7 @@ def get_international_Z_F():
 
 def get_value_add_firm():
     # get info for value added
-    vfm_EVFB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/EVFB.txt', ['FAC', 'COMM', 'REG'])
+    vfm_EVFB_dict = utils.txt_to_COMM_REG_dict('raw_gtap_dataset/EVFB.csv', ['FAC', 'COMM', 'REG'])
     factor_purchase_firms_vfm = utils.raw_dict_to_matrix(vfm_EVFB_dict, 'va_all_factors',
                                                          {'COMM_index_in_key': 1,
                                                           'REG_index_in_key': 2}, hyper)

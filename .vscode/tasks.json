@@ -1,0 +1,29 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+
+    // issue: the .lst file outputs to the project base dir
+    // -todo: invoke the 'output=xx.lst' command to control dir
+
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run this file with GAMS",
+            "type": "shell",
+            "command": "gams",
+            "args": [
+                    {
+                    "value": "${fileBasenameNoExtension}",
+                    "quoting": "escape"
+                    }
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${fileDirname}"
+            }
+        }
+    ]
+}
