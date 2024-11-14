@@ -192,8 +192,8 @@ indexes = []
 for region in hyper.regions_list:
     for act in hyper.activities_list:
         indexes.append(region + '_' + act)
-df.set_axis(indexes + ['VA'], axis=0, inplace=True)
-df.set_axis(indexes + ['y_' + region for region in hyper.regions_list], axis=1, inplace=True)
+df = df.set_axis(indexes + ['VA'], axis=0)
+df = df.set_axis(indexes + ['y_' + region for region in hyper.regions_list], axis=1)
 with open('processed_gtap/adjusted_MRIOT_df.pkl', 'wb') as f:
     pickle.dump(df, f)
 print('------------ Done ({}s) --------------'.format(time.time()-b))
