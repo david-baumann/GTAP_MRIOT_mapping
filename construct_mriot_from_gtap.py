@@ -169,7 +169,7 @@ print('------------ Done ({}s) --------------'.format(time.time()-b))
 
 # ---- balance check -------------
 Y_without_VA = np.sum(Z_init, axis=0)
-VA_by_country = utils.row_sum_n_col(np.reshape(VA_init, (1, -1)), 65).flatten()
+VA_by_country = utils.row_sum_n_col(np.reshape(VA_init, (1, -1)), hyper.num_commodities).flatten()
 Y_init = Y_without_VA + VA_init
 
 mriot_balance_row = np.sum(adjusted_MRIOT_ZF_part, axis=1)

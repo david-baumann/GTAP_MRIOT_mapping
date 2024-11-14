@@ -15,7 +15,7 @@ def df_to_COMM_REG_dict(df, key_list):
 
 def txt_to_COMM_REG_dict(txt_path, key_list):
     # transfer txt files in original gtap dataset to dict
-    return df_to_COMM_REG_dict(pd.read_table(txt_path, delimiter=','), key_list)
+    return df_to_COMM_REG_dict(pd.read_table(txt_path, delimiter=',').apply(lambda x: x.str.lower() if(x.dtype == 'object') else x, result_type='broadcast'), key_list)
 
 
 def get_item_index(comm, reg, hyper: HyperParas):

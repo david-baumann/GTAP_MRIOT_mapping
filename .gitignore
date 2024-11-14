@@ -3,3 +3,4 @@ raw_gtap_dataset/*.csv
 raw_gtap_dataset/*.gdx
 raw_gtap_dataset/*.lst
 processed_gtap/*.pkl
+raw_gtap_dataset/*_auto.pkl
