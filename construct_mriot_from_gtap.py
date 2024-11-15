@@ -196,4 +196,34 @@ df = df.set_axis(indexes + ['VA'], axis=0)
 df = df.set_axis(indexes + ['y_' + region for region in hyper.regions_list], axis=1)
 with open('processed_gtap/adjusted_MRIOT_df.pkl', 'wb') as f:
     pickle.dump(df, f)
+
+### PYMRIO ready export
+## export the Z matrix
+_Z_multiindex = pd.MultiIndex.from_product(
+    [hyper.regions_list, hyper.activities_list], names=["region", "sector"]
+) 
+adjusted_MRIOT_Z = pd.DataFrame(
+    data=adjusted_MRIOT_ZF_part[0:hyper.num_items, 0:hyper.num_items], index=_Z_multiindex, columns=_Z_multiindex
+)
+with open('processed_gtap/adjusted_MRIOT_for_pymrio_Z.pkl', 'wb') as f:
+    pickle.dump(adjusted_MRIOT_Z, f)
+
+## export the F (final demand - called Y in pymrio) matrix
+_categories = ["final demand"]
+_fd_multiindex = pd.MultiIndex.from_product(
+    [hyper.regions_list, _categories], names=["region", "category"]
+)
+adjusted_MRIOT_F = pd.DataFrame(
+    data=adjusted_MRIOT_ZF_part[0:hyper.num_items, hyper.num_items:], index=_Z_multiindex, columns=_fd_multiindex
+)
+with open('processed_gtap/adjusted_MRIOT_for_pymrio_Y.pkl', 'wb') as f:
+    pickle.dump(adjusted_MRIOT_F, f)
+
+## export the VA (factors of production - called F in pymrio) matrix
+adjusted_MRIOT_VA = pd.DataFrame(
+    data=np.reshape(VA_init, (1, -1)), index=["Value Added"], columns=_Z_multiindex
+)
+with open('processed_gtap/adjusted_MRIOT_for_pymrio_F.pkl', 'wb') as f:
+    pickle.dump(adjusted_MRIOT_VA, f)
+
 print('------------ Done ({}s) --------------'.format(time.time()-b))
