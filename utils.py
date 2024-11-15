@@ -117,7 +117,7 @@ def RAS_matrix_balancing(A, u, v):
     print('------balancing.....------')
     for i in range(500):
         b = time.time()
-        print('Iteration #', i, ' start.')
+        print('Iteration #', i, 'start.')
         maxdiff_abs_u = np.max(u-np.sum(X, axis=1))
         maxdiff_abs_v = np.max(v-np.sum(X, axis=0))
         maxdiff_abs = max(maxdiff_abs_u, maxdiff_abs_v)
@@ -130,8 +130,8 @@ def RAS_matrix_balancing(A, u, v):
         maxdiff_rel_s = np.max(S-1)
         X = X * S[None, :]
         maxdiff_rel = max(maxdiff_rel_r, maxdiff_rel_s)
-        print('Maximum initial difference (rel): ', maxdiff_rel, ' (R: ', maxdiff_rel_r, ' S: ', maxdiff_rel_s, ')' )
-        print('Maximum initial difference (abs): ', maxdiff_abs, ' (u: ', maxdiff_abs_u, ' v: ', maxdiff_abs_v, ')'  )
+        print('Maximum initial difference (rel): {:>20.9f}  (R: {:>20.9f} S: {:>20.9f})'.format(maxdiff_rel, maxdiff_rel_r, maxdiff_rel_s))
+        print('Maximum initial difference (abs): {:>20.9f}  (u: {:>20.9f} v: {:>20.9f})'.format(maxdiff_abs, maxdiff_abs_u, maxdiff_abs_v))
         print('Done ({}s)'.format(time.time()-b))
         if maxdiff_abs <= 0.00000001 : break
     return X

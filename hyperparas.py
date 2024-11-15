@@ -16,3 +16,4 @@ class HyperParas:
         self.num_regions = len(self.regions_list)
         self.num_commodities = len(self.activities_list)
         self.num_items = self.num_regions * self.num_commodities
+        print('Shape of input data:','num_regions', self.num_regions, ', num_commodities', self.num_commodities, ', num_items', self.num_items)
