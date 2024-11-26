@@ -129,12 +129,24 @@ def get_raw_MRIOT():
     Z_international, F_international = get_international_Z_F()
     print('------------ Done ({}s) --------------'.format(time.time()-b))
 
-    Z = Z_domestic + Z_international
+    Z_withneg = Z_domestic + Z_international
     F = F_domestic + F_international
+
+    # INVERT NEGATIVE TRADE FLOWS
+    Z = np.clip(Z_withneg, a_min=0, a_max=None) - np.transpose(np.clip(Z_withneg, a_min=None, a_max=0))
+
+    # Adjust FINAL DEMAND for inverted negative values in Z matrix
+    F_scale_vector = np.divide(np.sum(Z, axis=1), np.sum(Z_withneg, axis=1), out=np.ones_like(np.sum(Z_withneg, axis=1)), where=(np.sum(Z_withneg, axis=1))!=0)
+    F = F * F_scale_vector[:, None]
 
     print('------------ Constructing VA... --------------')
     b = time.time()
     VA = get_value_add_firm()
+
+    # Adjust VALUE ADDED for inverted negative values in Z matrix
+    VA_scale_vector = np.divide(np.sum(Z, axis=0), np.sum(Z_withneg, axis=0), out=np.ones_like(np.sum(Z_withneg, axis=0)), where=(np.sum(Z_withneg, axis=0))!=0)
+    VA = VA * VA_scale_vector
+
     print('------------ Done ({}s) --------------'.format(time.time()-b))
 
     print('------------ Saving raw Z, F, VA... --------------')
