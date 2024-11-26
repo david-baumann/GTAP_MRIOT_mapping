@@ -131,7 +131,7 @@ def RAS_matrix_balancing(A, u, v):
         pickle.dump(S_1, f)
 
     print('------balancing.....------')
-    for i in range(500):
+    for i in range(1000):
         b = time.time()
         print('Iteration #', i, 'start.')
         maxdiff_abs_u = np.max(u-np.sum(X, axis=1))
