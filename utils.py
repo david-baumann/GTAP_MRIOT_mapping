@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from hyperparas import HyperParas
 import time
+import pickle
 
 
 def df_to_COMM_REG_dict(df, key_list):
@@ -114,6 +115,21 @@ def RAS_matrix_balancing(A, u, v):
     :return: X: balanced matrix
     """
     X = A.copy()
+    
+    with open('processed_gtap/bal_X_init.pkl', 'wb') as f:
+        pickle.dump(A, f)
+    with open('processed_gtap/bal_u_init.pkl', 'wb') as f:
+        pickle.dump(u, f)
+    with open('processed_gtap/bal_v_init.pkl', 'wb') as f:
+        pickle.dump(v, f)
+
+    R_1 = np.divide(u, np.sum(X, axis=1), out=np.ones_like(u), where=(np.sum(X, axis=1))!=0)
+    S_1 = np.divide(v, np.sum(X, axis=0), out=np.ones_like(v), where=(np.sum(X, axis=0))!=0)
+    with open('processed_gtap/bal_R_init.pkl', 'wb') as f:
+        pickle.dump(R_1, f)
+    with open('processed_gtap/bal_S_init.pkl', 'wb') as f:
+        pickle.dump(S_1, f)
+
     print('------balancing.....------')
     for i in range(500):
         b = time.time()
@@ -121,14 +137,16 @@ def RAS_matrix_balancing(A, u, v):
         maxdiff_abs_u = np.max(u-np.sum(X, axis=1))
         maxdiff_abs_v = np.max(v-np.sum(X, axis=0))
         maxdiff_abs = max(maxdiff_abs_u, maxdiff_abs_v)
+# row sum deviation
 #        R = u / np.sum(X, axis=1)
         R = np.divide(u, np.sum(X, axis=1), out=np.ones_like(u), where=(np.sum(X, axis=1))!=0)
-        maxdiff_rel_r = np.max(R-1)
         X = X * R[:, None]
+# col sum deviation
 #        S = v / np.sum(X, axis=0)
         S = np.divide(v, np.sum(X, axis=0), out=np.ones_like(v), where=(np.sum(X, axis=0))!=0)
-        maxdiff_rel_s = np.max(S-1)
         X = X * S[None, :]
+        maxdiff_rel_r = np.max(R-1)
+        maxdiff_rel_s = np.max(S-1)
         maxdiff_rel = max(maxdiff_rel_r, maxdiff_rel_s)
         print('Maximum initial difference (rel): {:>20.9f}  (R: {:>20.9f} S: {:>20.9f})'.format(maxdiff_rel, maxdiff_rel_r, maxdiff_rel_s))
         print('Maximum initial difference (abs): {:>20.9f}  (u: {:>20.9f} v: {:>20.9f})'.format(maxdiff_abs, maxdiff_abs_u, maxdiff_abs_v))
@@ -147,7 +165,7 @@ def MRIOT_adjust(Z_, VA_, F_, num_comm_):
     :return:
     """
     # keep constant
-    Y_without_VA = np.sum(Z_, axis=0)
+    Y_without_VA = np.sum(Z_, axis=0) # colum sum
     VA_by_country = row_sum_n_col(np.reshape(VA_, (1, -1)), num_comm_).flatten()
 
     # targeted row sum

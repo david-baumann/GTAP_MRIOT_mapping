@@ -226,4 +226,21 @@ adjusted_MRIOT_VA = pd.DataFrame(
 with open('processed_gtap/adjusted_MRIOT_for_pymrio_F.pkl', 'wb') as f:
     pickle.dump(adjusted_MRIOT_VA, f)
 
+original_MRIOT_Z = pd.DataFrame(
+    data=Z_init, index=_Z_multiindex, columns=_Z_multiindex
+)
+
+abs_diff_MRIOT_Z = adjusted_MRIOT_Z - original_MRIOT_Z
+rel_diff_MRIOT_Z = adjusted_MRIOT_Z / original_MRIOT_Z
+rel_diff_MRIOT_Z = rel_diff_MRIOT_Z.sub(1)
+
+with open('processed_gtap/original_MRIOT_Z.pkl', 'wb') as f:
+    pickle.dump(original_MRIOT_Z, f)
+with open('processed_gtap/adjusted_MRIOT_Z.pkl', 'wb') as f:
+    pickle.dump(adjusted_MRIOT_Z, f)
+with open('processed_gtap/abs_diff_MRIOT_Z.pkl', 'wb') as f:
+    pickle.dump(abs_diff_MRIOT_Z, f)
+with open('processed_gtap/rel_diff_MRIOT_Z.pkl', 'wb') as f:
+    pickle.dump(rel_diff_MRIOT_Z, f)
+
 print('------------ Done ({}s) --------------'.format(time.time()-b))
