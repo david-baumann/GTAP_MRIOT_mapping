@@ -5,3 +5,4 @@ raw_gtap_dataset/*.lst
 processed_gtap/*
 !processed_gtap/read_mew.md
 raw_gtap_dataset/*_auto.pkl
+_archive/*
